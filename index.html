@@ -4,130 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowledge Graph Visualizer</title>
-    <style>
-        :root {
-            --bg: #fff;
-            --text: #222;
-            --panel-bg: #fafafa;
-            --panel-border: #ccc;
-            --link: #999;
-        }
-        body.dark-mode {
-            --bg: #181a1b;
-            --text: #eee;
-            --panel-bg: #23272a;
-            --panel-border: #444;
-            --link: #bbb;
-        }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            transition: background 0.2s, color 0.2s;
-            font-family: sans-serif;
-        }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        .graph-container {
-            width: 100vw;
-            height: 70vh;
-            min-height: 400px;
-            background: var(--bg);
-            box-sizing: border-box;
-        }
-        svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-            background: var(--bg);
-        }
-        .node {
-            stroke: #fff;
-            stroke-width: 1.5px;
-        }
-        .link {
-            stroke: var(--link);
-            stroke-opacity: 0.6;
-        }
-        .node-label {
-            font-size: 12px;
-            font-family: sans-serif;
-            fill: var(--text);
-        }
-        #details {
-            display: none;
-            position: fixed;
-            top: 80px;
-            right: 30px;
-            width: 340px;
-            max-height: 70vh;
-            overflow-y: auto;
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            color: var(--text);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            border-radius: 8px;
-            padding: 18px 20px;
-            z-index: 1001;
-        }
-        .toggle-btn {
-            margin-bottom: 1em;
-            padding: 0.5em 1em;
-            border-radius: 5px;
-            border: 1px solid var(--panel-border);
-            background: var(--panel-bg);
-            color: var(--text);
-            cursor: pointer;
-        }
-        .top-right-toggle {
-            position: fixed;
-            top: 20px;
-            right: 30px;
-            z-index: 1000;
-        }
-        .details-close {
-            position: absolute;
-            top: 8px;
-            right: 12px;
-            background: transparent;
-            border: none;
-            font-size: 1.5em;
-            color: var(--text);
-            cursor: pointer;
-            z-index: 1002;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Knowledge Graph Visualizer</h1>
-    <div>
-        <p>Select your JSON files to generate the knowledge graph.</p>
-        <label for="entities-file">Entities (JSON or CSV):</label>
-        <input type="file" id="entities-file" accept=".json,.csv">
-        <br><br>
-        <label for="relationships-file">Relationships (JSON or CSV):</label>
-        <input type="file" id="relationships-file" accept=".json,.csv">
-        <br><br>
-        <button id="generate-button">Generate Graph</button>
-    </div>
-
-    <div class="graph-container">
-        <svg id="graph-svg" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet"></svg>
-    </div>
-
-    <div id="details">
-        <button class="details-close" id="details-close-btn" title="Close">&times;</button>
-        <em>Click a node or link to see details.</em>
-    </div>
-
-    <div class="top-right-toggle">
-        <button class="toggle-btn" id="toggle-mode">🌙 Toggle Light/Dark Mode</button>
+    <div class="container">
+        <div class="controls">
+            <h2>Upload Files</h2>
+            <div class="file-upload">
+                <label for="entities-file" class="btn">Entities</label>
+                <input type="file" id="entities-file" accept=".json,.csv">
+                <span class="file-name" id="entities-file-name">No file chosen</span>
+            </div>
+            <div class="file-upload">
+                <label for="relationships-file" class="btn">Relationships</label>
+                <input type="file" id="relationships-file" accept=".json,.csv">
+                <span class="file-name" id="relationships-file-name">No file chosen</span>
+            </div>
+            <button id="generate-button" class="btn">Generate Graph</button>
+            <hr>
+            <button id="toggle-mode" class="btn">Toggle Dark/Light Mode</button>
+        </div>
+        <div class="graph-area">
+            <h1>Knowledge Graph Visualizer</h1>
+            <svg id="graph-svg"></svg>
+            <div id="details" class="details-popup"></div>
+        </div>
     </div>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="visualizer.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/main.js"></script>
     <script>
         // Set mode from localStorage on load
         (function() {

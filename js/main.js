@@ -37,8 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     } else if (entitiesExt === 'csv') {
                         entities = parseCSV(entitiesText);
-                    } else {
-                        throw new Error('Entities file must be .json or .csv');
                     }
                 } catch (e) {
                     showDetails('error', { message: `Error parsing entities file: ${e.message}` });
@@ -55,8 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     } else if (relationshipsExt === 'csv') {
                         relationships = parseCSV(relationshipsText);
-                    } else {
-                        throw new Error('Relationships file must be .json or .csv');
                     }
                 } catch (e) {
                     showDetails('error', { message: `Error parsing relationships file: ${e.message}` });

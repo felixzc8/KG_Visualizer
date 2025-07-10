@@ -31,7 +31,7 @@ class GraphVisualizer {
             .force("center", d3.forceCenter(this.width / 2, this.height / 2))
             .on("tick", () => this.ticked())
             .on("end", () => {
-                if (this.activeNodeId === null) {
+                if (this.activeNodeId === null && this.graph && this.graph.nodes) {
                     this.graph.nodes.forEach(node => {
                         if (!node.pinned) {
                             node.fx = node.x;

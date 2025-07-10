@@ -2,6 +2,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const visualizer = new GraphVisualizer('#graph-svg');
     visualizer.onNodeClick(showDetails);
 
+    function showDetails(type, data) {
+        const detailsDiv = document.getElementById('details');
+        if (!type || !data) {
+            detailsDiv.style.display = 'none';
+            return;
+        }
+        
+        let content = '';
+        if (type === 'node') {
+            content = `
+                <h3>Node Details</h3>
+                <p><strong>Name:</strong> ${data.name}</p>
+                <p><strong>Type:</strong> ${data.entity_type}</p>
+                <p><strong>ID:</strong> ${data.id}</p>
+                ${data.description ? `<p><strong>Description:</strong> ${data.description}</p>` : ''}
+            `;
+        } else if (type === 'link') {
+            content = `
+                <h3>Relationship Details</h3>
+                <p><strong>Source:</strong> ${data.original.source_entity_id}</p>
+                <p><strong>Target:</strong> ${data.original.target_entity_id}</p>
+                <p><strong>Type:</strong> ${data.original.relationship_type || 'N/A'}</p>
+                ${data.original.description ? `<p><strong>Description:</strong> ${data.original.description}</p>` : ''}
+            `;
+        } else if (type === 'error') {
+            content = `
+                <h3>Error</h3>
+                <p style="color: red;">${data.message}</p>
+            `;
+        }
+        
+        detailsDiv.innerHTML = content;
+        detailsDiv.style.display = 'block';
+    }
+
     function setupFileInput(inputId, nameId) {
         const fileInput = document.getElementById(inputId);
         const fileNameSpan = document.getElementById(nameId);
